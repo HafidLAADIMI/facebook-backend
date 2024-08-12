@@ -2,12 +2,14 @@ package facebook.backend.backend.service;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import facebook.backend.backend.models.Post;
+
 import facebook.backend.backend.models.User;
 import facebook.backend.backend.repository.PostRepository;
 
@@ -26,7 +28,7 @@ public class PostService {
         post.setFile(file.getBytes());
         post.setText(text);
         post.setTimestamp(new Date());
-        post.setUser(user);
+        user.addPost(post);
         postRepository.save(post);
     }
 
@@ -37,7 +39,7 @@ public class PostService {
             post.setFile(file.getBytes());
             post.setText(text);
             post.setTimestamp(new Date());
-            post.setUser(user);
+            user.addPost(post);
             postRepository.save(post);
         } else {
             throw new IllegalArgumentException("Post not found with id: " + id);
@@ -49,5 +51,11 @@ public class PostService {
          postRepository.deleteById(id);
     
     }
+
+    public List<Post> getALlPosts() {
+          return postRepository.findAll();
+    }
+
+  
 
 }

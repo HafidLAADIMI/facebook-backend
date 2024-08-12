@@ -3,6 +3,7 @@ package facebook.backend.backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import facebook.backend.backend.models.User;
 import facebook.backend.backend.service.UserService;
 
 @RestController
+@CrossOrigin
 public class UserController {
 
     @Autowired
@@ -47,7 +49,7 @@ public class UserController {
     public ResponseEntity<?> updateUser(@RequestPart String username,@RequestPart String password, @RequestPart MultipartFile imageFile,@PathVariable int id) {
 
         try {
-            if (username !=null &&  password !=null) {
+            if (username !=null ||  password !=null) {
                 userService.updateUser(username,password, imageFile,id);
                 return new ResponseEntity<>("the user updated", HttpStatus.OK);
 
@@ -68,5 +70,8 @@ public class UserController {
         }
         else return new ResponseEntity<>("the user wasn't found",HttpStatus.NOT_FOUND);
     }
+
+
+    
 
 }
